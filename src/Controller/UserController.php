@@ -7,46 +7,80 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Repository\FormationRepository;
 use App\Repository\UserRepository;
+use App\Form\ParentFormType;
+
 
 
 use Symfony\Component\HttpFoundation\Request;
 
 class UserController extends AbstractController
 {
+#[Route('/user', name: 'app_user')]
+public function user(Request $request, UserRepository $userRepository, FormationRepository $formationRepository): Response
+{
+    // Récupérer les données des entités User et Profil depuis la base de données
+    $user = $this->getUser();
+    $formation = $formationRepository->findAll();     
+ 
+    // Créer une instance du formulaire ParentFormType
+    $form = $this->createForm(ParentFormType::class);
 
-    #[Route('/user', name: 'app_user')]
-    public function User(UserRepository $userRepository, FormationRepository $FormationRepository): Response
-    {
-        // Récupérer les données des entités User et Profil depuis la base de données
-        $users = $userRepository->findByAllUsers();
-dump($users);
-
-        $formation = $FormationRepository->findAll();
-        
-        
-        // Transmettre les données à la vue Twig pour les afficher
-        return $this->render('user/index.html.twig', [
-            'users' => $users,
-            'idformation' => $formation,
-        ]);
+    // Gérer la soumission du formulaire
+    $form->handleRequest($request);
+    if ($form->isSubmitted() && $form->isValid()) {
+        // Traiter les données du formulaire
+        $data = $form->getData();
+        // Enregistrer les données en base de données
+        // ...
+        // Rediriger l'utilisateur vers une autre page
+        return $this->redirectToRoute('app_user');
     }
+
+    // Transmettre les données à la vue Twig pour les afficher
+    return $this->render('user/index.html.twig', [
+        'user' => $user,
+        'form' => $form->createView(),
+    ]);
+}
+
+//     #[Route('/user', name: 'app_user')]
+//     public function User(UserRepository $userRepository, FormationRepository $formationRepository): Response
+//     {
+//         // Récupérer les données des entités User et Profil depuis la base de données
+//         $users = $this->getUser();
+// dump($users);
+//         //$formation = $FormationRepository->findAll();     
+ 
+//         // Transmettre les données à la vue Twig pour les afficher
+//         return $this->render('user/index.html.twig', [
+//             'user' => $users,
+
+//         ]);
+//     }
 
     #[Route('/toto', name: 'app_toto', methods: ['GET', 'POST'])]
     public function Toto(Request $request, UserRepository $userRepository): Response
     {
-        $users = new User();
-        $form = $this->createForm(UserType::class, $users);
+         $user = $this->getUser();
+            dump($user);
+
+        
+        $form = $this->createForm(ParentFormType::class);
+
         $form->handleRequest($request);
-
         if ($form->isSubmitted() && $form->isValid()) {
-            $userRepository->save($users, true);
+            // Handle form submission
+            // You can access your child form data like this:
+            $user = $form->get('user')->getData();
+            $formation = $form->get('formation')->getData();
+                
 
-            return $this->redirectToRoute('app_book_index', [], Response::HTTP_SEE_OTHER);
         }
-
-        return $this->renderForm('user/test.html.twig', [
-            'users' => $users,
-            'form' => $form,
+        
+        return $this->render('user/test.html.twig', [
+            'form' => $form->createView(),
+            'user' => $user,
         ]);
     }
-}
+    }
+

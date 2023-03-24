@@ -5,7 +5,7 @@
 {% block body %}
     <h1>Edit Formation</h1>
 
-    {{ include('formation/_form.html.twig', {'button_label': 'Update'}) }}
+    {% comment %} {{ include('formation/_form.html.twig', {'button_label': 'Update'}) }} {% endcomment %}
 
     <a href="{{ path('app_formation_index') }}">back to list</a>
 
