@@ -1,56 +1,46 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello UserController!{% endblock %}
+{% block title %}Bonjour {{ user.prenom }}!{% endblock %}
 
 {% block body %}
 
+<!-- component -->
+<div class="flex items-center h-screen w-full justify-center">
 
-<div class="example-wrapper">
-   <div class="container mx-auto px-4 py-8">
-  <div class="max-w-sm rounded overflow-hidden shadow-lg">
-    <img class="w-full" src="lapin.jpg" alt="User photo">
-    <div class="px-6 py-4">
-       
-      <div class="font-bold text-xl mb-2">{{ user.email }} <br>{{ user.prenom }}</div>
-      <p class="text-gray-700 text-base">
-        <tbody>
-       
-            <tr>
-                <td>{{ user.id }}</td>
-                <td>{{ user.email }}</td>
-                <td>{{ user.idformation.cursus }}</td>
-                <td>
-                   
-                </td>
-            </tr>
-  
-        
-        </tbody>
-      </p>
-    </div>
-  </div>
-</div>
-
-    <div class="row">
-        <div class="col-md-6">
-            <h2>Vos informations</h2>
-            <p>Nom : {{ user.nom }}</p>
-            <p>Prénom : {{ user.prenom }}</p>
-            <p>Email : {{ user.email }}</p>
+<div class="max-w-xs">
+    <div class="bg-white shadow-xl rounded-lg py-3">
+        <div class="photo-wrapper p-2">
+            <img class="w-32 h-32 rounded-full mx-auto" src="lapin.jpg" alt="">
         </div>
-        <div class="col-md-6">
-            <h2>Modifier vos informations</h2>
-            {{ form_start(form) }}
-                {{ form_row(form.user) }}
-                {{ form_row(form.formation) }}
-                {{ form_row(form.save) }}
-            {{ form_end(form) }}
+        <div class="p-2">
+            <h3 class="text-center text-xl text-gray-900 font-medium leading-8">{{ user.nom }} {{ user.prenom }}</h3>
+            <div class="text-center text-gray-400 text-xs font-semibold">
+                <p>{{user.idformation.cursus}} {{ user.idformation.annee }}</p>
+            </div>
+            <table class="text-xs my-3">
+                <tbody><tr>
+                    <td class="px-2 py-2 text-gray-500 font-semibold">Adresse</td>
+                    <td class="px-2 py-2">Paris</td>
+                </tr>
+                <tr>
+                    <td class="px-2 py-2 text-gray-500 font-semibold">Email</td>
+                    <td class="px-2 py-2">{{user.email}}</td>
+                </tr>
+                <tr>
+                    <td class="px-2 py-2 text-gray-500 font-semibold">Description</td>
+                    <td class="px-2 py-2">Je suis en formation continu pour plus tard</td>
+                </tr>
+            </tbody></table>
+
+            <div class="text-center my-3">
+                <a class="text-xs text-indigo-500 italic hover:underline hover:text-indigo-600 font-medium" href="{{ path('app_formation_edit', {'id': user.id}) }}">View Profile</a>
+                <a href="">edit</a>
+            </div>
+
         </div>
     </div>
-    This friendly message is coming from:
-    <ul>
-         
-        
-    </ul>
 </div>
+
+</div>
+
 {% endblock %}
