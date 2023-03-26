@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Form;
+
 use App\Entity\Formation;
 use App\Entity\User;
 use Symfony\Component\Form\AbstractType;
@@ -12,8 +13,6 @@ use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Validator\Constraints\File;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
-
-
 
 class UserType extends AbstractType
 {
@@ -33,6 +32,12 @@ class UserType extends AbstractType
             ->add('nom')
             ->add('prenom')
             ->add('ville')
+            ->add('idformation', EntityType::class, [
+
+                'class' => Formation::class,
+                'choice_label' => 'cursus',
+
+            ])
             ->add('photo', FileType::class, [
                 'label' => 'Photo',
 
@@ -57,7 +62,7 @@ class UserType extends AbstractType
                 ],
             ])
         ;
-            
+
         ;
     }
 

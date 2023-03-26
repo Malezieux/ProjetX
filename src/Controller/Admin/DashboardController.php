@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Controller\Admin;
+
 use App\Entity\Formation;
 use App\Entity\User;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
@@ -19,7 +20,7 @@ class DashboardController extends AbstractDashboardController
         $routeBuilder = $this->container->get(AdminUrlGenerator::class);
         $url = $routeBuilder->setController(FormationCrudController::class)->generateUrl();
 
-       return $this->redirect($url);
+        return $this->redirect($url);
 
         // Option 1. You can make your dashboard redirect to some common page of your backend
         //
@@ -44,9 +45,18 @@ class DashboardController extends AbstractDashboardController
             ->setTitle('ProjetX');
     }
 
+    // public function configureMenuItems(): iterable
+    // {
+    //     yield MenuItem::linkToDashboard('Dashboard', 'fa fa-home');
+    //     yield MenuItem::linkToCrud('The Label', 'fas fa-list', User::class);
+    // }
+
     public function configureMenuItems(): iterable
     {
         yield MenuItem::linkToDashboard('Dashboard', 'fa fa-home');
-        yield MenuItem::linkToCrud('The Label', 'fas fa-list', User::class);
+
+        yield MenuItem::section('Gestion des utilisateurs');
+        yield MenuItem::linkToCrud('Utilisateurs', 'fas fa-users', User::class);
+        yield MenuItem::linkToCrud('Formations', 'fas fa-graduation-cap', Formation::class);
     }
 }

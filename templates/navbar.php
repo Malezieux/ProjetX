@@ -9,7 +9,7 @@
                 </div>
                 <div class="flex flex-nowrap justify-between">
                     <a href="{{ path('app_user') }}" class="text-white font-bold text-xl ">
-                       MyWebsite
+                       Ma fiche profil
                     </a>
                 </div>
                 <div class="flex flex-nowrap justify-between sm:block sm:ml-6 pl-50">
