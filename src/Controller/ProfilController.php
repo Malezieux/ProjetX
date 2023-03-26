@@ -9,6 +9,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\String\Slugger\SluggerInterface;
+
 
 #[Route('/profil')]
 class ProfilController extends AbstractController
@@ -22,13 +24,37 @@ class ProfilController extends AbstractController
     }
 
     #[Route('/new', name: 'app_profil_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, UserRepository $userRepository): Response
+
+    public function new(Request $request, UserRepository $userRepository, SluggerInterface $slugger): Response
     {
         $user = new User();
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $photo = $form->get('user')->getData();
+
+            if ($photo) {
+                $originalFilename = pathinfo($photo->getClientOriginalName(), PATHINFO_FILENAME);
+                // this is needed to safely include the file name as part of the URL
+                $safeFilename = $slugger->slug($originalFilename);
+                $newFilename = $safeFilename.'-'.uniqid().'.'.$photo->guessExtension();
+
+                // Move the file to the directory where brochures are stored
+                try {
+                    $photo->move(
+                        $this->getParameter('stockage'),
+                        $newFilename
+                    );
+                } catch (FileException $e) {
+                    // ... handle exception if something happens during file upload
+                }
+
+                // updates the 'cover' property to store the IMAGE file name
+                // instead of its contents
+                $user->setPhoto($newFilename);
+            }
+
             $userRepository->save($user, true);
 
             return $this->redirectToRoute('app_profil_index', [], Response::HTTP_SEE_OTHER);
@@ -76,3 +102,4 @@ class ProfilController extends AbstractController
         return $this->redirectToRoute('app_profil_index', [], Response::HTTP_SEE_OTHER);
     }
 }
+

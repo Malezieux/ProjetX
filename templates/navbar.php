@@ -14,7 +14,6 @@
                 </div>
                 <div class="flex flex-nowrap justify-between sm:block sm:ml-6 pl-50">
                     <div class="flex space-x-4">
-                        <a href="{{ path('app_user') }}" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Users</a>
                         <a href="{{ path('app_user') }}" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Contact</a>
                     </div>
                 </div>
