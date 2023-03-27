@@ -1,20 +1,29 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}New User{% endblock %}
-
+{% form_theme form 'tailwind_2_layout.html.twig' %}
 {% block body %}
     <h1>Create new User</h1>
 
- {% extends 'base.html.twig' %}
+{{ form_start(form) }}
+				<fieldset class="mb-4">
+					<legend>Mon identité</legend>
+					{{ form_row(form.nom) }}
 
-{% block title %}New Formation{% endblock %}
+{{ form_row(form.password) }}
+					{{ form_row(form.prenom) }}
+					{{ form_row(form.email) }}
+                    {{ form_row(form.idformation) }}
+   
+		
+				</fieldset>
 
-{% block body %}
-    <h1>Create new Formation</h1>
+				                <button class="btn">{{ button_label|default('Save') }}</button>
+			    
+				{{ form_end(form) }}
 
-    {{ include('profil/_form.html.twig') }}
+
 
     <a href="{{ path('app_profil_index') }}">back to list</a>
-{% endblock %}
     <a href="{{ path('app_profil_index') }}">back to list</a>
 {% endblock %}

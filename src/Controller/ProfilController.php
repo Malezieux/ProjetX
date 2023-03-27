@@ -5,6 +5,8 @@ namespace App\Controller;
 use App\Entity\User;
 use App\Form\UserType;
 use App\Repository\UserRepository;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
+
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -24,13 +26,21 @@ class ProfilController extends AbstractController
 
     #[Route('/new', name: 'app_profil_new', methods: ['GET', 'POST'])]
 
-    public function new(Request $request, UserRepository $userRepository, SluggerInterface $slugger): Response
+    public function new(Request $request, UserRepository $userRepository, SluggerInterface $slugger, UserPasswordHasherInterface $passwordHasher): Response
     {
         $user = new User();
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $plaintextPassword = $form->get('password')->getData();
+            if (!empty($plaintextPassword)) {
+                $hasedPassword = $passwordHasher->hashPassword(
+                    $user,
+                    $plaintextPassword
+                );
+                $user->setPassword($hasedPassword);
+            }
             $photo = $form->get('photo')->getData();
             if ($photo) {
                 $originalFilename = pathinfo($photo->getClientOriginalName(), PATHINFO_FILENAME);
@@ -70,13 +80,26 @@ class ProfilController extends AbstractController
     }
 
     #[Route('/{id}/edit', name: 'app_profil_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, User $user, UserRepository $userRepository, SluggerInterface $slugger): Response
+    public function edit(Request $request, User $user, UserRepository $userRepository, SluggerInterface $slugger, UserPasswordHasherInterface $passwordHasher): Response
     {
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             #condition pour hacher le password
+
+
+            $plaintextPassword = $form->get('password')->getData();
+            if (!empty($plaintextPassword)) {
+                $hasedPassword = $passwordHasher->hashPassword(
+                    $user,
+                    $plaintextPassword
+                );
+                $user->setPassword($hasedPassword);
+            }
+
+
+            #condition pour importer les images
             $photo = $form->get('photo')->getData();
             if ($photo) {
                 $originalFilename = pathinfo($photo->getClientOriginalName(), PATHINFO_FILENAME);
@@ -102,7 +125,7 @@ class ProfilController extends AbstractController
 
         return $this->renderForm('profil/edit.html.twig', [
             'user' => $user,
-            'form' => $form,
+            'form' => $form->createView(),
         ]);
     }
 
