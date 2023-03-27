@@ -1,48 +1,46 @@
 {% extends 'base.html.twig' %}
 
+
 {% block title %}User index{% endblock %}
-
 {% block body %}
-    <h1>User index</h1>
-
-    <table class="table">
-        <thead>
+    <h1 class="text-2xl font-bold mb-4">User index</h1>
+    <table class="table w-full mx-auto border-collapse border border-gray-300">
+        <thead class="bg-gray-100">
             <tr>
-                <th>Id</th>
-                <th>Email</th>
-                <th>Roles</th>
-                <th>Password</th>
-                <th>Nom</th>
-                <th>Prenom</th>
-                <th>Ville</th>
-                <th>Cursus</th>
-                <th>actions</th>
+                <th class="p-3" >#</th>
+                <th class="p-3">Email</th>
+                <th class="p-3">Nom</th>
+                <th class="p-3">Prenom</th>
+                <th class="p-3">Ville</th>
+                <th class="p-3">Cursus</th>
+                <th class="p-3">Année</th>
+                <th class="p-3">Actions</th>
             </tr>
         </thead>
         <tbody>
         {% for user in users %}
-            <tr>
-                <td>{{ user.id }}</td>
-                <td>{{ user.email }}</td>
-                <td>{{ user.roles ? user.roles|json_encode : '' }}</td>
-                <td>{{ user.password }}</td>
-                <td>{{ user.nom }}</td>
-                <td>{{ user.prenom }}</td>
-                <td>{{ user.ville }}</td>
+            <tr class="border-b border-gray-300 text-center" >
+                <td class="p-3">{{ user.id }}</td>
+                <td class="p-3">{{ user.email }}</td>
+                <td class="p-3">{{ user.nom }}</td>
+                <td class="p-3">{{ user.prenom }}</td>
+                <td class="p-3">{{ user.ville }}</td>
+                <td class="p-3">{{ user.idformation.Cursus }}</td>
+                <td class="p-3">{{ user.idformation.Annee }}</td>
 
-                <td>
-                    <a href="{{ path('app_profil_show', {'id': user.id}) }}">show</a>
-                    <a href="{{ path('app_profil_edit', {'id': user.id}) }}">edit</a>
+                <td class="p-3">
+                    <a href="{{ path('app_profil_show', {'id': user.id}) }}" class="text-blue-500 hover:underline">show</a><br/>
+                    <a href="{{ path('app_profil_edit', {'id': user.id}) }}" class="text-blue-500 hover:underline">edit</a>
                 </td>
             </tr>
             
         {% else %}
             <tr>
-                <td colspan="8">no records found</td>
+                <td colspan="9" class="p-3">no records found</td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
 
-    <a href="{{ path('app_profil_new') }}">Create new</a>
+    <a href="{{ path('app_profil_new') }}" class="block mt-6 text-blue-500 hover:text-blue-800">Create new</a>
 {% endblock %}
