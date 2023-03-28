@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
 
 
-{% block title %}User index{% endblock %}
+{% block title %}Profil index{% endblock %}
 {% block body %}
     <h1 class="text-2xl font-bold mb-4">User index</h1>
     <table class="table w-full mx-auto border-collapse border border-gray-300">
@@ -25,8 +25,8 @@
                 <td class="p-3">{{ user.nom }}</td>
                 <td class="p-3">{{ user.prenom }}</td>
                 <td class="p-3">{{ user.ville }}</td>
-                <td class="p-3">{{ user.idformation.Cursus }}</td>
-                <td class="p-3">{{ user.idformation.Annee }}</td>
+                <td class="p-3">{{ user.idformation.cursus }}</td>
+                <td class="p-3">{{ user.idformation.annee }}</td>
 
                 <td class="p-3">
                     <a href="{{ path('app_profil_show', {'id': user.id}) }}" class="text-blue-500 hover:underline">show</a><br/>

@@ -17,8 +17,9 @@ use Symfony\Component\String\Slugger\SluggerInterface;
 class ProfilController extends AbstractController
 {
     #[Route('/', name: 'app_profil_index', methods: ['GET'])]
-    public function index(UserRepository $userRepository): Response
+    public function index(UserRepository $userRepository, FormationRepository $formation): Response
     {
+
         return $this->render('profil/index.html.twig', [
             'users' => $userRepository->findAll(),
         ]);

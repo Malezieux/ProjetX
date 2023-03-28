@@ -20,25 +20,15 @@ class UserController extends AbstractController
 #[Route('/user', name: 'app_user')]
 public function user(Request $request, UserRepository $userRepository, FormationRepository $formationRepository): Response
 {
-    // Récupérer les données des entités User et Profil depuis la base de données
     $user = $this->getUser();
     $formation = $formationRepository->findAll();     
- 
-    // Créer une instance du formulaire ParentFormType
     $form = $this->createForm(ParentFormType::class);
-
-    // Gérer la soumission du formulaire
     $form->handleRequest($request);
     if ($form->isSubmitted() && $form->isValid()) {
-        // Traiter les données du formulaire
         $data = $form->getData();
-        // Enregistrer les données en base de données
-        // ...
-        // Rediriger l'utilisateur vers une autre page
+
         return $this->redirectToRoute('app_user');
     }
-
-    // Transmettre les données à la vue Twig pour les afficher
     return $this->render('user/index.html.twig', [
         'user' => $user,
         'form' => $form->createView(),
