@@ -1,48 +1,39 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Bonjour {{ user.prenom }}!{% endblock %}
+{% block title %}Profil index{% endblock %}
 
 {% block body %}
-
-<!-- component -->
-<div class="flex items-center h-screen w-full justify-center">
-
-<div class="max-w-xs">
-    <div class="bg-white shadow-xl rounded-lg py-3">
-
-        <div class="photo-wrapper p-2">
-        <img src="{{ asset('photo/' ~ user.photo) }}"/>
-
-        </div>
-        <div class="p-2">
-            <h3 class="text-center text-xl text-gray-900 font-medium leading-8">{{ user.nom }} {{ user.prenom }}</h3>
-            <div class="text-center text-gray-400 text-xs font-semibold">
-                <p>{{user.idformation.cursus}} {{ user.idformation.annee }}</p>
+    {% for user in users %}
+        <div class="max-w-xs mb-8">
+            <div class="bg-white shadow-xl rounded-lg py-3">
+                <div class="photo-wrapper p-2">
+                    <img src="{{ asset('photo/' ~ user.photo) }}"/>
+                </div>
+                <div class="p-2">
+                    <h3 class="text-center text-xl text-gray-900 font-medium leading-8">{{ user.nom }} {{ user.prenom }}</h3>
+                    <div class="text-center text-gray-400 text-xs font-semibold"></div>
+                    <table class="text-xs my-3">
+                        <tbody>
+                            <tr>
+                                <td class="px-2 py-2 text-gray-500 font-semibold">Adresse</td>
+                                <td class="px-2 py-2 truncate">{{ user.adresse }}</td>
+                            </tr>
+                            <tr>
+                                <td class="px-2 py-2 text-gray-500 font-semibold">Email</td>
+                                <td class="px-2 py-2 truncate">{{ user.email }}</td>
+                            </tr>
+                            <tr>
+                                <td class="px-2 py-2 text-gray-500 font-semibold">Description</td>
+                                <td class="px-2 py-2 truncate">{{ user.description }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
-            <table class="text-xs my-3">
-                <tbody><tr>
-                    <td class="px-2 py-2 text-gray-500 font-semibold">Adresse</td>
-                    <td class="px-2 py-2">Paris</td>
-                </tr>
-                <tr>
-                    <td class="px-2 py-2 text-gray-500 font-semibold">Email</td>
-                    <td class="px-2 py-2">{{user.email}}</td>
-                </tr>
-                <tr>
-                    <td class="px-2 py-2 text-gray-500 font-semibold">Description</td>
-                    <td class="px-2 py-2">{{user.description }}</td>
-                </tr>
-            </tbody></table>
-
-            <div class="text-center my-3">
-                <a class="text-xs text-indigo-500 italic hover:underline hover:text-indigo-600 font-medium" href="{{ path('app_profil_edit', {'id': user.id}) }}">View Profile</a>
-                <a href="">edit</a>
-            </div>
-
-        </div>
-    </div>
-</div>
-
-</div>
-
+        </div> 
+    {% else %}
+        <p class="text-center">Aucun utilisateur trouvé.</p>
+    {% endfor %}
+              
+    <a href="{{ path('app_profil_new') }}" class="block mt-6 text-blue-500 hover:text-blue-800">Créer un nouveau profil</a>
 {% endblock %}

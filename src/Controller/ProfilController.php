@@ -21,9 +21,7 @@ class ProfilController extends AbstractController
     #[Route('/', name: 'app_profil_index', methods: ['GET'])]
     public function index(Request $request, UserRepository $userRepository, FormationRepository $formationRepository): Response
     {
-
-        
-$user = $this->getUser();
+$user = $userRepository->findAll();
 $formation = $formationRepository->findAll();
 $form = $this->createForm(ParentFormType::class);
 $form->handleRequest($request);
@@ -32,8 +30,9 @@ if ($form->isSubmitted() && $form->isValid()) {
 
     return $this->redirectToRoute('app_user');
 }
-return $this->render('user/index.html.twig', [
-    'user' => $user,
+dump($user);
+return $this->render('profil/index.html.twig', [
+    'users' => $user,
     'form' => $form->createView(),
 ]);
 
