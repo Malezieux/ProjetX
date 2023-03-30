@@ -101,7 +101,7 @@ public function findOneBySomeField($value): ?User
    public function search($searchTerm): ?array
     {
         $qb = $this->createQueryBuilder('b')
-            ->where('b.nom LIKE :searchTerm')
+            ->where('b.ville LIKE :searchTerm')
     
             ->setParameter('searchTerm', '%'.$searchTerm.'%')
             ->getQuery();

@@ -6,6 +6,8 @@ use App\Entity\User;
 use App\Form\UserType;
 use App\Repository\UserRepository;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
+use App\Repository\FormationRepository;
+use App\Form\ParentFormType ;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -17,12 +19,24 @@ use Symfony\Component\String\Slugger\SluggerInterface;
 class ProfilController extends AbstractController
 {
     #[Route('/', name: 'app_profil_index', methods: ['GET'])]
-    public function index(UserRepository $userRepository, FormationRepository $formation): Response
+    public function index(Request $request, UserRepository $userRepository, FormationRepository $formationRepository): Response
     {
 
-        return $this->render('profil/index.html.twig', [
-            'users' => $userRepository->findAll(),
-        ]);
+        
+$user = $this->getUser();
+$formation = $formationRepository->findAll();
+$form = $this->createForm(ParentFormType::class);
+$form->handleRequest($request);
+if ($form->isSubmitted() && $form->isValid()) {
+    $data = $form->getData();
+
+    return $this->redirectToRoute('app_user');
+}
+return $this->render('user/index.html.twig', [
+    'user' => $user,
+    'form' => $form->createView(),
+]);
+
     }
 
     #[Route('/new', name: 'app_profil_new', methods: ['GET', 'POST'])]

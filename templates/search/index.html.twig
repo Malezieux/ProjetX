@@ -17,9 +17,24 @@
 
      {% for user in users %}
   
-            <li>{{ user.nom }}</li>
-            <li>{{ user.prenom }}</li>
-            <li>{{ user.ville }}</li>
+           <table class="text-xs my-3">
+                <tbody><tr>
+                    <td class="px-2 py-2 text-gray-500 font-semibold">Nom</td>
+                    <td class="px-2 py-2">{{user.nom}}</td>
+                </tr>
+                  <tbody><tr>
+                    <td class="px-2 py-2 text-gray-500 font-semibold">Nom</td>
+                    <td class="px-2 py-2">{{user.prenom}}</td>
+                </tr>
+                <tr>
+                    <td class="px-2 py-2 text-gray-500 font-semibold">Email</td>
+                    <td class="px-2 py-2">{{user.email}}</td>
+                </tr>
+                <tr>
+                    <td class="px-2 py-2 text-gray-500 font-semibold">Description</td>
+                    <td class="px-2 py-2">{{user.description }}</td>
+                </tr>
+            </tbody></table>
         {% endfor %}
   <form method="get" action="{{ path('app_search') }}">
  {% if users %}   
