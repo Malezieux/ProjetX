@@ -6,6 +6,8 @@ use App\Entity\User;
 use App\Form\UserType;
 use App\Repository\UserRepository;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
+use App\Repository\FormationRepository;
+use App\Form\ParentFormType ;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -17,11 +19,23 @@ use Symfony\Component\String\Slugger\SluggerInterface;
 class ProfilController extends AbstractController
 {
     #[Route('/', name: 'app_profil_index', methods: ['GET'])]
-    public function index(UserRepository $userRepository): Response
+    public function index(Request $request, UserRepository $userRepository, FormationRepository $formationRepository): Response
     {
-        return $this->render('profil/index.html.twig', [
-            'users' => $userRepository->findAll(),
-        ]);
+$user = $userRepository->findAll();
+$formation = $formationRepository->findAll();
+$form = $this->createForm(ParentFormType::class);
+$form->handleRequest($request);
+if ($form->isSubmitted() && $form->isValid()) {
+    $data = $form->getData();
+
+    return $this->redirectToRoute('app_user');
+}
+dump($user);
+return $this->render('profil/index.html.twig', [
+    'users' => $user,
+    'form' => $form->createView(),
+]);
+
     }
 
     #[Route('/new', name: 'app_profil_new', methods: ['GET', 'POST'])]
@@ -80,15 +94,18 @@ class ProfilController extends AbstractController
     }
 
     #[Route('/{id}/edit', name: 'app_profil_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, User $user, UserRepository $userRepository, SluggerInterface $slugger, UserPasswordHasherInterface $passwordHasher): Response
+    public function edit(Request $request, User $user, UserRepository $userRepository, FormationRepository $formationRepository, SluggerInterface $slugger, UserPasswordHasherInterface $passwordHasher): Response
     {
+ $user = $this->getUser();
+$formation = $formationRepository->findAll();
+
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             #condition pour hacher le password
 
-
+           
             $plaintextPassword = $form->get('password')->getData();
             if (!empty($plaintextPassword)) {
                 $hasedPassword = $passwordHasher->hashPassword(
@@ -124,6 +141,7 @@ class ProfilController extends AbstractController
         }
 
         return $this->renderForm('profil/edit.html.twig', [
+            'idformation'=>$formationRepository,
             'user' => $user,
             'form' => $form->createView(),
         ]);
