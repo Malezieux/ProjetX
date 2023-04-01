@@ -94,15 +94,18 @@ return $this->render('profil/index.html.twig', [
     }
 
     #[Route('/{id}/edit', name: 'app_profil_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, User $user, UserRepository $userRepository, SluggerInterface $slugger, UserPasswordHasherInterface $passwordHasher): Response
+    public function edit(Request $request, User $user, UserRepository $userRepository, FormationRepository $formationRepository, SluggerInterface $slugger, UserPasswordHasherInterface $passwordHasher): Response
     {
+ $user = $this->getUser();
+$formation = $formationRepository->findAll();
+
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             #condition pour hacher le password
 
-
+           
             $plaintextPassword = $form->get('password')->getData();
             if (!empty($plaintextPassword)) {
                 $hasedPassword = $passwordHasher->hashPassword(
@@ -138,6 +141,7 @@ return $this->render('profil/index.html.twig', [
         }
 
         return $this->renderForm('profil/edit.html.twig', [
+            'idformation'=>$formationRepository,
             'user' => $user,
             'form' => $form->createView(),
         ]);

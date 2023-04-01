@@ -30,6 +30,7 @@ public function user(Request $request, UserRepository $userRepository, Formation
         return $this->redirectToRoute('app_user');
     }
     return $this->render('user/index.html.twig', [
+        'idformation' => $formation,
         'user' => $user,
         'form' => $form->createView(),
     ]);
