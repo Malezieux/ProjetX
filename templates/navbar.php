@@ -11,6 +11,18 @@
                     <a href="{{ path('app_user') }}" class="text-white font-bold text-xl ">
                        Mon profil
                     </a>
+                    <a href="{{ path('app_profil_delete', {'id': app.user.id}) }}" class="text-white font-bold text-xl ">
+                       Supprimer
+                    </a>
+                    <a href="{{ path('app_profil_edit', {'id': app.user.id}) }}" class="text-white font-bold text-xl ">
+                       Editer
+                    </a>
+                    <a href="{{ path('app_search') }}" class="text-white font-bold text-xl ">
+                       Rechercher
+                    </a>
+                    <a href="{{ path('app_profil_index') }}" class="text-white font-bold text-xl ">
+                       Liste Profils
+                    </a>
                 </div>
                 {% if is_granted('ROLE_ADMIN') %}
                     <div class="flex flex-nowrap justify-between sm:block sm:ml-6 pl-50">
