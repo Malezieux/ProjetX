@@ -24,11 +24,7 @@ public function user(Request $request, UserRepository $userRepository, Formation
     $formation = $formationRepository->findAll();     
     $form = $this->createForm(ParentFormType::class);
     $form->handleRequest($request);
-    if ($form->isSubmitted() && $form->isValid()) {
-        $data = $form->getData();
-
-        return $this->redirectToRoute('app_user');
-    }
+   
     return $this->render('user/index.html.twig', [
         'idformation' => $formation,
         'user' => $user,
