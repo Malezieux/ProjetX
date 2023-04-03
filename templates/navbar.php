@@ -6,21 +6,19 @@
                     <a href="{{ path('app_user') }}" class="text-white font-bold text-xl ">
                        <img class="mr-20" src="{{asset('geforbis.png')}}">
                     </a>
-                </div>
-                <div class="flex flex-nowrap justify-between">
-                    <a href="{{ path('app_user') }}" class="text-white font-bold text-xl ">
+                    <a href="{{ path('app_user') }}" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
                        Mon profil
                     </a>
-                    <a href="{{ path('app_profil_delete', {'id': app.user.id}) }}" class="text-white font-bold text-xl ">
+                    <a href="{{ path('app_profil_delete', {'id': app.user.id}) }}" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
                        Supprimer
                     </a>
-                    <a href="{{ path('app_profil_edit', {'id': app.user.id}) }}" class="text-white font-bold text-xl ">
+                    <a href="{{ path('app_profil_edit', {'id': app.user.id}) }}" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
                        Editer
                     </a>
-                    <a href="{{ path('app_search') }}" class="text-white font-bold text-xl ">
+                    <a href="{{ path('app_search') }}" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
                        Rechercher
                     </a>
-                    <a href="{{ path('app_profil_index') }}" class="text-white font-bold text-xl ">
+                    <a href="{{ path('app_profil_index') }}" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
                        Liste Profils
                     </a>
                 </div>
@@ -31,6 +29,7 @@
                         class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
                         Admin zone
                         </a>
+                    </div>
                     </div>
                 </div>
                 {% endif %}
