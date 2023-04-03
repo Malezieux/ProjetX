@@ -21,12 +21,14 @@ class UserController extends AbstractController
 public function user(Request $request, UserRepository $userRepository, FormationRepository $formationRepository): Response
 {
     $user = $this->getUser();
-    $formation = $formationRepository->findAll();     
+    //$formation = $formationRepository->findAll();
+
     $form = $this->createForm(ParentFormType::class);
     $form->handleRequest($request);
    
     return $this->render('user/index.html.twig', [
-        'idformation' => $formation,
+        //'idformation' => $formation,
+
         'user' => $user,
         'form' => $form->createView(),
     ]);
