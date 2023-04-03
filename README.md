@@ -1,0 +1,2 @@
+Votre fichier .env doit être configurer afin de lier l'application à votre base de donnée.
+Il est nécessaire de lancer la commande "npm run dev" pour activer la partie front end de l'application 
