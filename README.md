@@ -1,4 +1,7 @@
+<<<<<<< HEAD
 
+=======
+>>>>>>> 79dcd8b (modification README)
 # Trombinoscope
 Trombinoscope de l'école Gefor
 ## Configuration necessaire
@@ -15,17 +18,29 @@ Installer le projet en local
     Ouvrir une console et faire :
     - `git clone https://github.com/Malezieux/ProjetX.git`
     Suivi de :
+<<<<<<< HEAD
     - `symfony composer install`
+=======
+    - `install composer`
+>>>>>>> 79dcd8b (modification README)
   
 Créer et mettre à jour la base de données :
     Ouvrir le fichier ENV et le paramétrer 
     - `DATABASE_URL="mysql://root:!mot_de_passe!@127.0.0.1:3306/!nom_de_la_base!?serverVersion=8&charset=utf8mb4"`
     Puis effectuer dans la console 
+<<<<<<< HEAD
     - `symfony console doctrine:schema:update --force`
+=======
+    - `symfony doctrine:schema:update --force`
+>>>>>>> 79dcd8b (modification README)
   
 Lancer le server symfony
 - `symfony server:start`
   
 Ouvrir un navigateur et saisir l'adresse :
+<<<<<<< HEAD
+- `localhost:8000`
+>>>>>>> 79dcd8b (modification README)
+=======
 - `localhost:8000`
 >>>>>>> 79dcd8b (modification README)
