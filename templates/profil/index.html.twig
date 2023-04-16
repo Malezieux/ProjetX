@@ -6,6 +6,7 @@
 <div class="grid grid-cols-4 gap-6">
 {% for user in users %}
   <div class="max-w-xs bg-white shadow-xl rounded-lg py-3">
+    <a href={{ path('app_profil_show', {'id': user.id}) }}>
     <div class="photo-wrapper p-2">
         <img src="{{ asset('photo/' ~ user.photo) }}" class="h-32 w-32 object-cover rounded-full"/>
 </div>
@@ -29,6 +30,7 @@
         </tbody>
       </table>
     </div>
+  </a>
   </div>
 {% else %}
   <div class="max-w-xs bg-white shadow-xl rounded-lg py-3">
